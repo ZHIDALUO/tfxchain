@@ -18,13 +18,13 @@ package whisperv5
 
 import (
 	"fmt"
+	set2 "github.com/TFXchain/tfx/fatih/set.v0"
 	"time"
 
 	"github.com/TFXchain/tfx/common"
 	"github.com/TFXchain/tfx/log"
 	"github.com/TFXchain/tfx/p2p"
 	"github.com/TFXchain/tfx/rlp"
-	set "gopkg.in/fatih/set.v0"
 )
 
 // Peer represents a whisper protocol peer connection.
@@ -34,7 +34,7 @@ type Peer struct {
 	ws      p2p.MsgReadWriter
 	trusted bool
 
-	known *set.Set // Messages already known by the peer to avoid wasting bandwidth
+	known *set2.Set // Messages already known by the peer to avoid wasting bandwidth
 
 	quit chan struct{}
 }
@@ -46,7 +46,7 @@ func newPeer(host *Whisper, remote *p2p.Peer, rw p2p.MsgReadWriter) *Peer {
 		peer:    remote,
 		ws:      rw,
 		trusted: false,
-		known:   set.New(),
+		known:   &set2.Set{},
 		quit:    make(chan struct{}),
 	}
 }
