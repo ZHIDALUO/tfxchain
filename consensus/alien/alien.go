@@ -52,15 +52,17 @@ const (
 // TFXchain proof-of-stake protocol constants.
 var (
 	totalBlockReward                 = new(big.Int).Mul(big.NewInt(1e+18), big.NewInt(2.5e+8)) // Block reward in wei
-	defaultEpochLength               = uint64(201600)                                          // Default number of blocks after which vote's period of validity, About one week if period is 3
-	defaultBlockPeriod               = uint64(3)                                               // Default minimum difference between two consecutive block's timestamps
+	// 
+	defaultEpochLength               = uint64(201600)                                          // Default number of blocks after which vote's period of validity, About one week if period is 3 //
+	//   
+	defaultBlockPeriod               = uint64(3)                                               // Default minimum difference between two consecutive block's timestamps   //
 	defaultMaxSignerCount            = uint64(21)                                              //
 	minVoterBalance                  = new(big.Int).Mul(big.NewInt(100), big.NewInt(1e+18))
 	extraVanity                      = 32                                                    // Fixed number of extra-data prefix bytes reserved for signer vanity
 	extraSeal                        = 65                                                    // Fixed number of extra-data suffix bytes reserved for signer seal
 	uncleHash                        = types.CalcUncleHash(nil)                              // Always Keccak256(RLP([])) as uncles are meaningless outside of PoW.
 	defaultDifficulty                = big.NewInt(1)                                         // Default difficulty
-	defaultLoopCntRecalculateSigners = uint64(10)                                            // Default loop count to recreate signers from top tally
+	defaultLoopCntRecalculateSigners = uint64(10)                                            // Default loop count to recreate signers from top tally     \\
 	minerRewardPerThousand           = uint64(618)                                           // Default reward for miner in each block from block reward (618/1000)
 	candidateNeedPD                  = false                                                 // is new candidate need Proposal & Declare process
 	mcNetVersion                     = uint64(0)                                             // the net version of main chain
@@ -70,7 +72,7 @@ var (
 	mcNonce                          = uint64(0)                                             // the current Nonce of coinbase on main chain
 	mcTxDefaultGasPrice              = big.NewInt(30000000)                                  // default gas price to build transaction for main chain
 	mcTxDefaultGasLimit              = uint64(3000000)                                       // default limit to build transaction for main chain
-	proposalDeposit                  = new(big.Int).Mul(big.NewInt(1e+18), big.NewInt(1e+4)) // default current proposalDeposit
+	proposalDeposit                  = new(big.Int).Mul(big.NewInt(1e+18), big.NewInt(1e+4)) // default current proposalDeposit     //
 	scRentLengthRecommend            = uint64(0)                                             // block number for split each side chain rent fee
 )
 
@@ -160,7 +162,7 @@ type SignerFn func(accounts.Account, []byte) ([]byte, error)
 
 // SignTxFn is a signTx
 type SignTxFn func(accounts.Account, *types.Transaction, *big.Int) (*types.Transaction, error)
-
+//
 // sigHash returns the hash which is used as input for the delegated-proof-of-stake
 // signing. It is the hash of the entire header apart from the 65 byte signature
 // contained at the end of the extra data.
@@ -289,6 +291,7 @@ func (a *Alien) VerifyHeaders(chain consensus.ChainReader, headers []*types.Head
 // caller may optionally pass in a batch of parents (ascending order) to avoid
 // looking those up from the database. This is useful for concurrently verifying
 // a batch of new headers.
+
 func (a *Alien) verifyHeader(chain consensus.ChainReader, header *types.Header, parents []*types.Header) error {
 	if header.Number == nil {
 		return errUnknownBlock
